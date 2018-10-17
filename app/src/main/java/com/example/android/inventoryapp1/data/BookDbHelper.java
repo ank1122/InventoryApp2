@@ -32,7 +32,11 @@ public class BookDbHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         // The database is still at version 1, so there's nothing to do be done here.
+        final String DELETE_PRODUCT_TABLE =
+                "DROP TABLE IF EXISTS " + BookContract.BookEntry.TABLE_NAME;
+        db.execSQL(DELETE_PRODUCT_TABLE);
+        onCreate(db);
     }
 }

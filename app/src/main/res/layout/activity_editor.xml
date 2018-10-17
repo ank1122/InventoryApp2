@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/activity_margin"
     tools:context=".EditorActivity">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <!-- Product category -->
     <LinearLayout
@@ -81,15 +85,40 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:paddingLeft="4dp">
 
             <!-- Name field -->
             <EditText
                 android:id="@+id/edit_quantity"
                 style="@style/EditorFieldStyle"
+                android:layout_width="99dp"
                 android:inputType="textCapWords" />
+            <Button
+                android:id="@+id/increase_quantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:contentDescription="@string/content_description_quantity_increase"
+                android:text="@string/quantity_increase_button"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
+            <Button
+                android:id="@+id/decrease_quantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:contentDescription="@string/content_description_quantity_decrease"
+                android:text="@string/quantity_decrease_button"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -143,10 +172,23 @@
             <EditText
                 android:id="@+id/edit_phnno"
                 style="@style/EditorFieldStyle"
+                android:layout_width="wrap_content"
                 android:hint="@string/hint_phn"
                 android:inputType="number" />
 
-
+            <Button
+                android:id="@+id/contact_supplier"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/edit_phnno"
+                android:background="@color/colorPrimary"
+                android:text="@string/order_button"
+                android:textColor="@android:color/white" />
         </RelativeLayout>
     </LinearLayout>
-</LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
