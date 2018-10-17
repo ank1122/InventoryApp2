@@ -12,18 +12,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <!-- Product category -->
-    <LinearLayout
+       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Label -->
         <TextView
             style="@style/CategoryStyle"
             android:text="@string/category_product_name" />
 
-        <!-- Input fields -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -31,7 +28,6 @@
             android:orientation="vertical"
             android:paddingLeft="4dp">
 
-            <!-- Name field -->
             <EditText
                 android:id="@+id/edit_product_name"
                 style="@style/EditorFieldStyle"
@@ -41,18 +37,15 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Price category -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Label -->
         <TextView
             style="@style/CategoryStyle"
             android:text="@string/category_price" />
 
-        <!-- Input fields -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -60,7 +53,6 @@
             android:orientation="vertical"
             android:paddingLeft="4dp">
 
-            <!-- Name field -->
             <EditText
                 android:id="@+id/edit_price"
                 style="@style/EditorFieldStyle"
@@ -75,12 +67,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Label -->
         <TextView
             style="@style/CategoryStyle"
             android:text="@string/category_quantity" />
 
-        <!-- Input fields -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -88,7 +78,6 @@
             android:orientation="horizontal"
             android:paddingLeft="4dp">
 
-            <!-- Name field -->
             <EditText
                 android:id="@+id/edit_quantity"
                 style="@style/EditorFieldStyle"
@@ -131,7 +120,6 @@
             style="@style/CategoryStyle"
             android:text="@string/category_SuppName" />
 
-        <!-- Input fields -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -139,7 +127,6 @@
             android:orientation="vertical"
             android:paddingLeft="4dp">
 
-            <!-- Name field -->
             <EditText
                 android:id="@+id/edit_Sname"
                 style="@style/EditorFieldStyle"
@@ -149,26 +136,23 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Supplier category -->
-    <LinearLayout
+        <LinearLayout
         android:id="@+id/container_measurement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Label -->
+
         <TextView
             style="@style/CategoryStyle"
             android:text="@string/category_Supplierphn" />
 
-        <!-- Input fields -->
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:paddingLeft="4dp">
 
-            <!-- Number field -->
             <EditText
                 android:id="@+id/edit_phnno"
                 style="@style/EditorFieldStyle"

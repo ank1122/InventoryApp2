@@ -12,7 +12,7 @@ public final class BookContract {
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    public static final String PATH_BOOKS = "books";
+    public static final String PATH_BOOKS = "BookEntry";
 
 
     public static final class BookEntry implements BaseColumns {
@@ -27,9 +27,9 @@ public final class BookContract {
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_BOOKS;
 
-        public final static String TABLE_NAME = "books";
+        public final static String TABLE_NAME = "BookEntry";
 
-        public final static String _ID = BaseColumns._ID;
+        public final static String ID = BaseColumns._ID;
 
         public final static String COLUMN_Product_NAME = "name";
 

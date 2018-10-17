@@ -46,7 +46,7 @@ public class BookCursorAdapter extends CursorAdapter {
         int quantityColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_Quantity);
         int SupplierName = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_Supplier_Name);
         final String SupplierPhone = cursor.getString(cursor.getColumnIndexOrThrow(BookContract.BookEntry.COLUMN_Supplier_phNo));
-        final int rowId = cursor.getInt(cursor.getColumnIndexOrThrow(BookContract.BookEntry._ID));
+        final int rowId = cursor.getInt(cursor.getColumnIndexOrThrow(BookContract.BookEntry.ID));
 
         String productName = cursor.getString(productColumnIndex);
         String price = cursor.getString(priceColumnIndex);
@@ -62,7 +62,7 @@ public class BookCursorAdapter extends CursorAdapter {
                     contentValues.put(BookContract.BookEntry.COLUMN_Quantity, Integer.parseInt(quantity) - 1);
                     context.getContentResolver().update(newUri, contentValues, null, null);
                 } else {
-                    Toast.makeText(context, R.string.last_product_sell_warning, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.last_sell_warning, Toast.LENGTH_SHORT).show();
                 }
             }
         });

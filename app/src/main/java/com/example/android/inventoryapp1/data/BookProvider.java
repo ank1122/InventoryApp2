@@ -44,7 +44,7 @@ public class BookProvider extends ContentProvider {
                 cursor = database.query(BookEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case BOOK_ID:
-                selection = BookEntry._ID + "=?";
+                selection = BookEntry.ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 cursor = database.query(BookEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
@@ -113,7 +113,7 @@ public class BookProvider extends ContentProvider {
             case BOOKS:
                 return updateBook(uri, contentValues, selection, selectionArgs);
             case BOOK_ID:
-                selection = BookEntry._ID + "=?";
+                selection = BookEntry.ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 return updateBook(uri, contentValues, selection, selectionArgs);
             default:
@@ -178,7 +178,7 @@ public class BookProvider extends ContentProvider {
                 break;
 
             case BOOK_ID:
-                selection = BookEntry._ID + "=?";
+                selection = BookEntry.ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = database.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
                 break;

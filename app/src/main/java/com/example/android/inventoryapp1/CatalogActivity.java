@@ -57,55 +57,25 @@ public class CatalogActivity extends AppCompatActivity  implements LoaderManager
         BookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
 
+                Uri mCurrentUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, id);
 
-                startActivity(new Intent(getApplicationContext(), EditorActivity.class)
-                        .setData(ContentUris.withAppendedId(BookEntry.CONTENT_URI, id)));
+                intent.setData(mCurrentUri);
+
+                startActivity(intent);
+
+               // startActivity(new Intent(getApplicationContext(), EditorActivity.class)
+                 //       .setData(ContentUris.withAppendedId(BookEntry.CONTENT_URI, id)));
             }
         });
     }
 
-    /**private void insertBook() {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(BookContract.BookEntry.COLUMN_Product_NAME, "Book");
-        values.put(BookContract.BookEntry.COLUMN_Price, 200);
-        values.put(BookContract.BookEntry.COLUMN_Quantity, 100);
-        values.put(BookContract.BookEntry.COLUMN_Supplier_Name, "Kumar");
-        values.put(BookContract.BookEntry.COLUMN_Supplier_phNo, 123456789);
-
-        Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.menu_catalog, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            case R.id.action_insert_dummy_data:
-                insertBook();
-                return true;
-            case R.id.action_delete_all_entries:
-                // Do nothing for now
-                return true;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-*/
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         String[] projection ={
-                BookEntry._ID,
+                BookEntry.ID,
                 BookEntry.COLUMN_Product_NAME,
                 BookEntry.COLUMN_Price,
                 BookEntry.COLUMN_Quantity,

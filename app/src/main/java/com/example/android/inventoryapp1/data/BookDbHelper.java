@@ -11,7 +11,7 @@ public class BookDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "bookstore.db";
 
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
 
     public BookDbHelper(Context context) {
@@ -22,7 +22,8 @@ public class BookDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Create a String that contains the SQL statement to create the pets table
         String SQL_CREATE_BOOKS_TABLE = "CREATE TABLE " + BookContract.BookEntry.TABLE_NAME + " ("
-                + BookContract.BookEntry.COLUMN_Product_NAME + " TEXT PRIMARY KEY , "
+                + BookContract.BookEntry.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BookContract.BookEntry.COLUMN_Product_NAME + " TEXT NOT NULL , "
                 + BookContract.BookEntry.COLUMN_Price + " INTEGER NOT NULL, "
                 + BookContract.BookEntry.COLUMN_Quantity + " INTEGER NOT NULL, "
                 + BookContract.BookEntry.COLUMN_Supplier_Name + " TEXT NOT NULL, "

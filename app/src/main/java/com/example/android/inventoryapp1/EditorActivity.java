@@ -8,10 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -25,7 +23,6 @@ import android.widget.Toast;
 
 import com.example.android.inventoryapp1.data.BookContract;
 import com.example.android.inventoryapp1.data.BookContract.BookEntry;
-import com.example.android.inventoryapp1.data.BookDbHelper;
 
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -41,9 +38,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private Uri mCurrentUri;
 
-    private String currentProductName;
-    private int currentProductQuantity;
-    private int currentProductPrice;
+    private String currentBookName;
+    private int currentBookQuantity;
+    private int currentBookPrice;
     private String currentSupplierName;
     private String currentSupplierPhone;
 
@@ -71,9 +68,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (mCurrentUri == null) {
             MenuItem deleteMenuItem = menu.findItem(R.id.action_delete);
             deleteMenuItem.setVisible(false);
-            addUpdateMenuItem.setTitle(R.string.menu_item_add_product);
+            addUpdateMenuItem.setTitle(R.string.menu_item_add);
         } else {
-            addUpdateMenuItem.setTitle(R.string.menu_item_update_product);
+            addUpdateMenuItem.setTitle(R.string.menu_item_update);
         }
         return true;
     }
@@ -85,6 +82,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 insertBook();
+                if(shouldProceed)
                 finish();
                 break;
             case android.R.id.home:
@@ -104,19 +102,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-       Button increaseQuantityButton = (Button) findViewById(R.id.increase_quantity);
-        Button decreaseQuantityButton = (Button) findViewById(R.id.decrease_quantity);
-        Button orderButton = (Button) findViewById(R.id.contact_supplier);
         mCurrentUri = getIntent().getData();
-
         if (mCurrentUri == null) {
             setTitle(R.string.add_product_title);
             invalidateOptionsMenu();
-           orderButton.setVisibility(View.GONE);
+            // orderButton.setVisibility(View.GONE);
         } else {
             setTitle(R.string.edit_product_title);
             getLoaderManager().initLoader(1, null, this);
         }
+
+       Button increaseQuantityButton = (Button) findViewById(R.id.increase_quantity);
+        Button decreaseQuantityButton = (Button) findViewById(R.id.decrease_quantity);
+        Button orderButton = (Button) findViewById(R.id.contact_supplier);
 
         mNameEditText = (EditText) findViewById(R.id.edit_product_name);
         mpriceEditText = (EditText) findViewById(R.id.edit_price);
@@ -131,7 +129,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 if (!TextUtils.isEmpty(mquantiyEditText.getText())) {
                     mquantiyEditText.setText(String.valueOf(Integer.parseInt(mquantiyEditText.getText().toString()) + 1));
                 } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.product_quantity_toast), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.quantity_toast), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -142,7 +140,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 if (!mquantiyEditText.getText().toString().equals("0") && !TextUtils.isEmpty(mquantiyEditText.getText())) {
                     mquantiyEditText.setText(String.valueOf(Integer.parseInt(mquantiyEditText.getText().toString()) - 1));
                 } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.product_quantity_toast), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.quantity_toast), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -163,7 +161,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (mCurrentUri != null) {
-                    isBookChanged = (!currentProductName.equals(charSequence.toString()));
+                    isBookChanged = (!currentBookName.equals(charSequence.toString()));
                 }
             }
 
@@ -182,7 +180,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (mCurrentUri != null) {
-                    isBookChanged = (!String.valueOf(currentProductPrice).equals(charSequence.toString()));
+                    isBookChanged = (!String.valueOf(currentBookPrice).equals(charSequence.toString()));
                 }
             }
 
@@ -201,7 +199,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (mCurrentUri != null) {
-                    isBookChanged = (!String.valueOf(currentProductQuantity).equals(charSequence.toString()));
+                    isBookChanged = (!String.valueOf(currentBookQuantity).equals(charSequence.toString()));
                 }
             }
 
@@ -262,9 +260,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String phnString = msupplierphnEditText.getText().toString().trim();
         int phone = Integer.parseInt(phnString);
 
-       // BookDbHelper mDbHelper = new BookDbHelper(this);
-       // SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(BookContract.BookEntry.COLUMN_Product_NAME, nameString);
         values.put(BookContract.BookEntry.COLUMN_Price, price);
@@ -301,7 +296,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = {
-                BookEntry._ID,
+                BookEntry.ID,
                 BookEntry.COLUMN_Product_NAME,
                 BookEntry.COLUMN_Price,
                 BookEntry.COLUMN_Quantity,
@@ -318,15 +313,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             return;
         }
         if (cursor.moveToFirst()) {
-            currentProductName = cursor.getString(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_Product_NAME));
-            currentProductPrice = cursor.getInt(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_Price));
-            currentProductQuantity = cursor.getInt(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_Quantity));
+            currentBookName = cursor.getString(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_Product_NAME));
+            currentBookPrice = cursor.getInt(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_Price));
+            currentBookQuantity = cursor.getInt(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_Quantity));
             currentSupplierName = cursor.getString(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_Supplier_Name));
             currentSupplierPhone = cursor.getString(cursor.getColumnIndexOrThrow(BookEntry.COLUMN_Supplier_phNo));
 
-            mNameEditText.setText(currentProductName);
-            mpriceEditText.setText(String.valueOf(currentProductPrice));
-            mquantiyEditText.setText(String.valueOf(currentProductQuantity));
+            mNameEditText.setText(currentBookName);
+            mpriceEditText.setText(String.valueOf(currentBookPrice));
+            mquantiyEditText.setText(String.valueOf(currentBookQuantity));
             msuppplierNameEditText.setText(currentSupplierName);
             msupplierphnEditText.setText(currentSupplierPhone);
         }
@@ -379,15 +374,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private void showDeleteConfirmationDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.dialog_delete_product);
-        builder.setPositiveButton(R.string.dialog_delete_product_response_yes, new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.dialog_delete_);
+        builder.setPositiveButton(R.string.dialog_delete_response_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 deleteProduct();
             }
         });
 
-        builder.setNegativeButton(R.string.dialog_delete_product_response_no, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.dialog_delete_response_no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 if (dialog != null)
