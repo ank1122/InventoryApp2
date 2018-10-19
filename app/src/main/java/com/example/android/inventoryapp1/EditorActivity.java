@@ -45,7 +45,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private String currentSupplierPhone;
 
     private boolean isBookChanged = false;
-    private boolean shouldProceed = true;
+    private boolean proceed = true;
 
 
     @Override
@@ -82,7 +82,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 insertBook();
-                if(shouldProceed)
+                if(proceed)
                 finish();
                 break;
             case android.R.id.home:
@@ -243,55 +243,93 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         });
     }
 
-
-
     private void insertBook() {
         String nameString = mNameEditText.getText().toString().trim();
-        String priceString = mpriceEditText.getText().toString().trim();
-        int price = Integer.parseInt(priceString);
-        String quantityString = mquantiyEditText.getText().toString().trim();
-        int quantity = Integer.parseInt(quantityString);
+        String price = mpriceEditText.getText().toString().trim();
+        String quantity = mquantiyEditText.getText().toString().trim();
         String supplierString = msuppplierNameEditText.getText().toString().trim();
-        String phnString = msupplierphnEditText.getText().toString().trim();
-        int phone = Integer.parseInt(phnString);
+        String phone = msupplierphnEditText.getText().toString().trim();
 
-        ContentValues values = new ContentValues();
-        values.put(BookContract.BookEntry.COLUMN_Product_NAME, nameString);
-        values.put(BookContract.BookEntry.COLUMN_Price, price);
-        values.put(BookContract.BookEntry.COLUMN_Quantity, quantity);
-        values.put(BookContract.BookEntry.COLUMN_Supplier_Name, supplierString);
-        values.put(BookContract.BookEntry.COLUMN_Supplier_phNo, phone);
+        if (mCurrentUri == null || TextUtils.isEmpty(nameString) || TextUtils.isEmpty(price) ||
+                TextUtils.isEmpty(quantity) || TextUtils.isEmpty(supplierString) || TextUtils.isEmpty(phone) ) {
+            if (TextUtils.isEmpty(nameString)) {
+                Toast.makeText(this, R.string.name_toast, Toast.LENGTH_SHORT).show();
+                proceed = false;
+                return;
+            } else {
+                proceed = true;
+            }
+
+            if (TextUtils.isEmpty(String.valueOf(price))) {
+                Toast.makeText(this, R.string.price_toast, Toast.LENGTH_SHORT).show();
+                proceed = false;
+                return;
+            } else {
+                proceed = true;
+            }
+
+            if (TextUtils.isEmpty(String.valueOf(quantity))) {
+                Toast.makeText(this, R.string.quantity_toast, Toast.LENGTH_SHORT).show();
+                proceed = false;
+                return;
+            } else {
+                proceed = true;
+            }
 
 
-        Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
+            if (TextUtils.isEmpty(supplierString)) {
+                Toast.makeText(this, R.string.supplier_name_toast, Toast.LENGTH_SHORT).show();
+                proceed = false;
+                return;
+            } else {
+                proceed = true;
+            }
 
-        if (newUri == null) {
-            Toast.makeText(this, getString(R.string.editor_update_failed),
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, getString(R.string.editor_update_successful),
-                    Toast.LENGTH_SHORT).show();
+            if(TextUtils.isEmpty(phone)){
+                Toast.makeText(this,R.string.supplier_phone_toast,Toast.LENGTH_SHORT).show();
+                proceed =false;
+                return;
+            }else
+                proceed =true;
         }
 
-        if (mCurrentUri == null) {
-        } else {
+            ContentValues values = new ContentValues();
+            values.put(BookContract.BookEntry.COLUMN_Product_NAME, nameString);
+            values.put(BookContract.BookEntry.COLUMN_Price, price);
+            values.put(BookContract.BookEntry.COLUMN_Quantity, quantity);
+            values.put(BookContract.BookEntry.COLUMN_Supplier_Name, supplierString);
+            values.put(BookContract.BookEntry.COLUMN_Supplier_phNo, phone);
 
-            int rowsAffected = getContentResolver().update(mCurrentUri, values, null, null);
 
-            if (rowsAffected == 0) {
+            Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
+
+            if (newUri == null) {
                 Toast.makeText(this, getString(R.string.editor_update_failed),
                         Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, getString(R.string.editor_update_successful),
                         Toast.LENGTH_SHORT).show();
             }
+
+            if (mCurrentUri == null) {
+            } else {
+
+                int rowsAffected = getContentResolver().update(mCurrentUri, values, null, null);
+
+                if (rowsAffected == 0) {
+                    Toast.makeText(this, getString(R.string.editor_update_failed),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, getString(R.string.editor_update_successful),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
         }
-    }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

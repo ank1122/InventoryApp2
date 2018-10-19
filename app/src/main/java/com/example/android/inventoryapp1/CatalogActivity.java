@@ -25,7 +25,7 @@ import com.example.android.inventoryapp1.data.BookDbHelper;
 
 public class CatalogActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    private static final int Book_LOADER = 0;
+    private static final int Book_LOADER = 1;
     private BookCursorAdapter mCursorAdapter ;
     private BookDbHelper mDbHelper;
 
@@ -36,7 +36,7 @@ public class CatalogActivity extends AppCompatActivity  implements LoaderManager
         start();
     }
 
-        public void start(){
+    public void start(){
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         ListView BookListView = (ListView) findViewById(R.id.list);
         View emptyView = findViewById(R.id.empty_view);
@@ -57,16 +57,9 @@ public class CatalogActivity extends AppCompatActivity  implements LoaderManager
         BookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
 
-                Uri mCurrentUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, id);
-
-                intent.setData(mCurrentUri);
-
-                startActivity(intent);
-
-               // startActivity(new Intent(getApplicationContext(), EditorActivity.class)
-                 //       .setData(ContentUris.withAppendedId(BookEntry.CONTENT_URI, id)));
+               startActivity(new Intent(getApplicationContext(), EditorActivity.class)
+                        .setData(ContentUris.withAppendedId(BookEntry.CONTENT_URI, id)));
             }
         });
     }

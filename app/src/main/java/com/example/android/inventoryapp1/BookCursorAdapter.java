@@ -62,7 +62,7 @@ public class BookCursorAdapter extends CursorAdapter {
                     contentValues.put(BookContract.BookEntry.COLUMN_Quantity, Integer.parseInt(quantity) - 1);
                     context.getContentResolver().update(newUri, contentValues, null, null);
                 } else {
-                    Toast.makeText(context, R.string.last_sell_warning, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.last_sale_warning, Toast.LENGTH_SHORT).show();
                 }
             }
         });

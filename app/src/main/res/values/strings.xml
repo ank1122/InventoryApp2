@@ -40,7 +40,7 @@
     <string name="menu_item_add">Add Product</string>
     <string name="menu_item_update">Update Product</string>
     <string name="menu_item_delete">Delete Product</string>
-    <string name="empty_view_text">No Products!\n\nClick on Plus icon to add a Dummy Product.</string>
+    <string name="empty_view_text">Click on Plus icon to add a Dummy Product.</string>
     <string name="check_android_log">Check Android Log (Info) for Viewing Results</string>
     <string name="toast_success_message"> added Successfully</string>
     <string name="toast_error_message">Error occurred while adding Product.</string>
@@ -49,9 +49,9 @@
     <string name="toast_success_message_delete"> deleted Successfully</string>
     <string name="toast_error_message_delete">Error occurred while deleting Product.</string>
 
-    <string name="sell_button">Sell</string>
+    <string name="sale_button">Sale</string>
     <string name="order_button">Order</string>
-    <string name="last_sell_warning">Can\'t Sell! Product is out of stock!</string>
+    <string name="last_sale_warning">  out of stock!</string>
 
     <string name="quantity_increase_button">+1</string>
     <string name="quantity_decrease_button">-1</string>
@@ -61,7 +61,7 @@
     <string name="edit_product_title">Edit Product</string>
     <string name="add_product_title">Add Product</string>
 
-    <string name="dialog_unsave_changes">You\'ve un-save changes!</string>
+    <string name="dialog_unsave_changes">unsave changes!</string>
     <string name="toast_no_new_changes">No new changes were made!</string>
     <string name="dialog_response_discard">Discard</string>
     <string name="dialog_response_keep_editing">Keep Editing</string>
@@ -72,7 +72,7 @@
     <string name="supplier_name_toast">Supplier Name is required!</string>
     <string name="supplier_phone_toast">Supplier Phone is required!</string>
 
-    <string name="dialog_delete_">Do you want to delete this product?</string>
+    <string name="dialog_delete_">Do you want to delete this ?</string>
     <string name="dialog_delete_response_yes">Yes</string>
     <string name="dialog_delete_response_no">No</string>
 
