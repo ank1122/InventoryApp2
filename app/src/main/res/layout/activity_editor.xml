@@ -57,7 +57,7 @@
                 android:id="@+id/edit_price"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/hint_price"
-                android:inputType="textCapWords" />
+                android:inputType="number" />
 
         </LinearLayout>
     </LinearLayout>
@@ -82,7 +82,7 @@
                 android:id="@+id/edit_quantity"
                 style="@style/EditorFieldStyle"
                 android:layout_width="99dp"
-                android:inputType="textCapWords" />
+                android:inputType="number" />
             <Button
                 android:id="@+id/increase_quantity"
                 android:layout_width="0dp"

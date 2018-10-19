@@ -106,7 +106,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (mCurrentUri == null) {
             setTitle(R.string.add_product_title);
             invalidateOptionsMenu();
-            // orderButton.setVisibility(View.GONE);
         } else {
             setTitle(R.string.edit_product_title);
             getLoaderManager().initLoader(1, null, this);
@@ -305,17 +304,16 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             values.put(BookContract.BookEntry.COLUMN_Supplier_phNo, phone);
 
 
-            Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
-
-            if (newUri == null) {
-                Toast.makeText(this, getString(R.string.editor_update_failed),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, getString(R.string.editor_update_successful),
-                        Toast.LENGTH_SHORT).show();
-            }
-
             if (mCurrentUri == null) {
+                Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
+
+                if (newUri == null) {
+                    Toast.makeText(this, getString(R.string.editor_update_failed),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, getString(R.string.editor_update_successful),
+                            Toast.LENGTH_SHORT).show();
+                }
             } else {
 
                 int rowsAffected = getContentResolver().update(mCurrentUri, values, null, null);
